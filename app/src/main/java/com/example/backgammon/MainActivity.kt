@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -27,27 +29,24 @@ class MainActivity : AppCompatActivity() {
     }
     suspend fun getUser(login: String, password: String): User? {
         var user = this.userDao.findByLogin(login)
-        if (user == null) {
+        if (user === null) {
             user = registerUser(login, password)
             return user
         } else { // check password
             if (user.passwordHash == this.hashPassword(password)) {
-                Log.i("dupa_debug", "Loggedin ${login}:${password}")
                 return user
             }
-            Log.i("dupa_debug", "Not logged in")
             return null
         }
     }
 
     suspend fun registerUser(login: String, password: String): User {
-        Log.i("dupa_debug", "Registered ${login}:${password}")
         val user: User = User(null, login, this.hashPassword(password))
         this.userDao.insertAll(user)
         return user
     }
 
-    fun hashPassword(pass :String): String {
+    private fun hashPassword(pass :String): String {
         val bytes = pass.toByteArray()
         val md = MessageDigest.getInstance("SHA-256")
         val digest = md.digest(bytes)
@@ -74,15 +73,20 @@ class MainActivity : AppCompatActivity() {
             } else if (password.isEmpty()) {
                 Toast.makeText(this, "Please enter your password!", Toast.LENGTH_LONG).show()
             } else {
-
-                val job = GlobalScope.launch {
+                var job = GlobalScope.launch {
                     var user = getUser(username, password)
-                    if (user == null) {
-                        Toast.makeText(this@MainActivity, "Bad login or password!", Toast.LENGTH_LONG).show()
-                    } else {
-                        val intent = Intent(this@MainActivity, Backgammon::class.java)
+                    if (user !== null) {
+                        val intent = Intent(this@MainActivity, Menu::class.java)
+                        intent.putExtra("user", user)
                         startActivity(intent)
                         finish()
+                    } else {
+                        // Toast.makeText() should only be called from Main/UI thread. Looper.getMainLooper() helps you to achieve it:
+                        // https://stackoverflow.com/questions/62482916
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(this@MainActivity, "Bad login or password!", Toast.LENGTH_SHORT).show();
+                        }
+                        return@launch
                     }
                 }
             }

@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Backgammon">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="logged in"
+        android:layout_marginBottom="10dp"
+        android:textSize="50sp"
+        android:shadowColor="@android:color/darker_gray"
+        android:textStyle="bold"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,13 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Backgammon">
         <activity
+            android:name=".Menu"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <activity
             android:name=".Backgammon"
             android:screenOrientation="landscape"
             android:theme="@style/NoActionBarTheme"
-            android:windowSoftInputMode="adjustResize"
-            >
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape"
