@@ -19,7 +19,7 @@
             android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Backgammon"
+            android:text="@string/backgammon"
             android:textSize="37sp"
             android:textAlignment="center"
             android:textColor="#fff"
@@ -48,10 +48,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
-                    android:text="You"
+                    android:text="@string/you"
                     android:textSize="20sp"
                     android:textColor="#fff"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                     android:fontFamily="casual"
                     android:text="0 points"
                     android:textColor="#fff"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,8 +96,7 @@
                 android:text="Menu"
                 android:textSize="25sp"
                 android:shadowColor="@color/cardview_dark_background"
-                android:shadowRadius="10dp"
-                android:textStyle="bold"></Button>
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,23 +146,31 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             >
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow"></ImageView>
-                            <LinearLayout
+                                android:src="@drawable/triangle_yellow" />
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_13"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
                                 >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="13"
-                                    ></TextView>
-                            </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/pawn_blue"
+                                    android:scaleType="centerCrop" />
+
+
+
+                            </com.google.android.flexbox.FlexboxLayout>
                         </FrameLayout>
 
 
@@ -178,17 +185,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red"></ImageView>
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_14"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="14"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -202,17 +206,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow"></ImageView>
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_15"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="15"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -226,17 +227,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red"></ImageView>
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_16"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="16"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -250,17 +248,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow"></ImageView>
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_17"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="17"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -274,17 +269,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red"></ImageView>
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_18"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="18"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -315,17 +307,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_12"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="12"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -341,17 +330,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_11"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="11"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -367,17 +353,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_10"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -393,17 +376,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_9"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="9"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -419,17 +399,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_8"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="8"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
 
                         <FrameLayout
@@ -445,17 +422,14 @@
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow" />
-                            <LinearLayout
+                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_7"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="7"
-                                    ></TextView>
-                            </LinearLayout>
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
                         </FrameLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -492,17 +466,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_19"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="19"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -517,17 +488,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_20"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="20"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -542,17 +510,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_21"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="21"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -566,17 +531,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_22"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="22"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -591,17 +553,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_23"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="23"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -616,17 +575,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_24"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="24"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -652,17 +608,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_6"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="6"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -678,17 +631,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_5"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="5"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -704,17 +654,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
-                            android:id="@+id/ll_area_4"
-                            android:layout_width="wrap_content"
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:id="@+id/ll_area_5"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="4"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -730,17 +677,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_3"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="3"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -756,17 +700,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
 
                     <FrameLayout
@@ -782,17 +723,14 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
-                        <LinearLayout
+                        <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1"
-                                ></TextView>
-                        </LinearLayout>
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
                     </FrameLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
