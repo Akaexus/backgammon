@@ -7,9 +7,11 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity
+@Entity(tableName = "user")
 class User (
-    @PrimaryKey(autoGenerate = true) val uid: Int?,
-    @ColumnInfo(name = "login") val login: String?,
-    @ColumnInfo(name = "password_hash") val passwordHash: String?
-) : Parcelable
+        @PrimaryKey(autoGenerate = true) var uid: Int,
+        @ColumnInfo(name = "login") val login: String,
+        @ColumnInfo(name = "password_hash") val passwordHash: String
+) : Parcelable {
+    constructor(login: String, passwordHash: String) : this(0, login, passwordHash)
+}

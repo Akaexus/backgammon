@@ -13,6 +13,7 @@ class Menu : AppCompatActivity() {
         var user: User? = intent.getParcelableExtra<User>("user")
 
         if (user != null) {
+            Log.i("backgammon_debug", user.uid.toString())
             Toast.makeText(this, user.login, Toast.LENGTH_LONG).show()
         }
     }

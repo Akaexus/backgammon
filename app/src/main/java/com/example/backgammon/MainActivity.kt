@@ -41,8 +41,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     suspend fun registerUser(login: String, password: String): User {
-        val user: User = User(null, login, this.hashPassword(password))
-        this.userDao.insertAll(user)
+        Log.i("backgammon_debug", "User $login registered")
+        val user: User = User(login, this.hashPassword(password))
+        user.uid = this.userDao.insert(user).toInt()
         return user
     }
 
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             } else if (password.isEmpty()) {
                 Toast.makeText(this, "Please enter your password!", Toast.LENGTH_LONG).show()
             } else {
-                var job = GlobalScope.launch {
+                GlobalScope.launch {
                     var user = getUser(username, password)
                     if (user !== null) {
                         val intent = Intent(this@MainActivity, Menu::class.java)

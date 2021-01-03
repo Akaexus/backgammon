@@ -14,10 +14,10 @@ interface UserDao {
     fun loadAllByIds(userIDs: IntArray): List<User>
 
     @Query("SELECT * FROM user WHERE login=:login")
-    fun findByLogin(login: String): User
+    fun findByLogin(login: String): User?
 
     @Insert
-    fun insertAll(vararg users: User)
+    fun insert(user: User) : Long
 
     @Delete
     fun delete(user: User)
