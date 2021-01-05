@@ -34,8 +34,30 @@
             android:id="@+id/ll_navbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/dice1"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/dice1"
+                    />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -154,20 +176,13 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_yellow" />
                             <com.google.android.flexbox.FlexboxLayout
-                                android:id="@+id/ll_area_13"
+                                android:id="@+id/ll_area_12"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:flexDirection="column"
                                 app:flexWrap="wrap"
                                 app:alignItems="center"
                                 >
-
-                                <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:src="@drawable/pawn_blue"
-                                    android:scaleType="centerCrop" />
-
 
 
                             </com.google.android.flexbox.FlexboxLayout>
@@ -179,12 +194,35 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             >
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_red"></ImageView>
+                                android:src="@drawable/triangle_red" />
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:id="@+id/ll_area_13"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            >
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/triangle_yellow" />
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_14"
                                 android:layout_width="match_parent"
@@ -205,7 +243,7 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow"></ImageView>
+                                android:src="@drawable/triangle_red"></ImageView>
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_15"
                                 android:layout_width="match_parent"
@@ -226,7 +264,7 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_red"></ImageView>
+                                android:src="@drawable/triangle_yellow"></ImageView>
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_16"
                                 android:layout_width="match_parent"
@@ -247,30 +285,9 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow"></ImageView>
-                            <com.google.android.flexbox.FlexboxLayout
-                                android:id="@+id/ll_area_17"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:flexDirection="column"
-                                app:flexWrap="wrap"
-                                app:alignItems="center"
-                                />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            >
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:adjustViewBounds="true"
-                                android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red"></ImageView>
                             <com.google.android.flexbox.FlexboxLayout
-                                android:id="@+id/ll_area_18"
+                                android:id="@+id/ll_area_17"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:flexDirection="column"
@@ -308,29 +325,6 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/triangle_red" />
                             <com.google.android.flexbox.FlexboxLayout
-                                android:id="@+id/ll_area_12"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:flexDirection="column"
-                                app:flexWrap="wrap"
-                                app:alignItems="center"
-                                />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:rotation="180"
-                            >
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:adjustViewBounds="true"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow" />
-                            <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_11"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -352,7 +346,7 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_red" />
+                                android:src="@drawable/triangle_yellow" />
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_10"
                                 android:layout_width="match_parent"
@@ -375,7 +369,7 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow" />
+                                android:src="@drawable/triangle_red" />
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_9"
                                 android:layout_width="match_parent"
@@ -398,7 +392,7 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_red" />
+                                android:src="@drawable/triangle_yellow" />
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_8"
                                 android:layout_width="match_parent"
@@ -421,9 +415,32 @@
                                 android:layout_height="match_parent"
                                 android:adjustViewBounds="true"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/triangle_yellow" />
+                                android:src="@drawable/triangle_red" />
                             <com.google.android.flexbox.FlexboxLayout
                                 android:id="@+id/ll_area_7"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:flexDirection="column"
+                                app:flexWrap="wrap"
+                                app:alignItems="center"
+                                />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:rotation="180"
+                            >
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/triangle_yellow" />
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:id="@+id/ll_area_6"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:flexDirection="column"
@@ -467,7 +484,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_19"
+                            android:id="@+id/ll_area_18"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -489,7 +506,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_20"
+                            android:id="@+id/ll_area_19"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -511,7 +528,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_21"
+                            android:id="@+id/ll_area_20"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -531,6 +548,28 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:id="@+id/ll_area_21"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_22"
                             android:layout_width="match_parent"
@@ -552,31 +591,9 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/triangle_yellow" />
-                        <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_23"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:flexDirection="column"
-                            app:flexWrap="wrap"
-                            app:alignItems="center"
-                            />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        >
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_24"
+                            android:id="@+id/ll_area_23"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -609,7 +626,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_6"
+                            android:id="@+id/ll_area_5"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -632,7 +649,7 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_5"
+                            android:id="@+id/ll_area_4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"
@@ -654,29 +671,6 @@
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/triangle_red" />
-                        <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/ll_area_5"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:flexDirection="column"
-                            app:flexWrap="wrap"
-                            app:alignItems="center"
-                            />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:rotation="180"
-                        >
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_3"
                             android:layout_width="match_parent"
@@ -699,7 +693,7 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/triangle_red" />
+                            android:src="@drawable/triangle_yellow" />
                         <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_2"
                             android:layout_width="match_parent"
@@ -722,9 +716,32 @@
                             android:layout_height="match_parent"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/triangle_yellow" />
+                            android:src="@drawable/triangle_red" />
                         <com.google.android.flexbox.FlexboxLayout
                             android:id="@+id/ll_area_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:flexDirection="column"
+                            app:flexWrap="wrap"
+                            app:alignItems="center"
+                            />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:rotation="180"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/triangle_yellow" />
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:id="@+id/ll_area_0"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:flexDirection="column"

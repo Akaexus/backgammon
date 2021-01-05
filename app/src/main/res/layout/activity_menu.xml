@@ -38,7 +38,7 @@
                 android:text="PLAY 1 vs 1">
             </Button>
             <Button
-                android:id="@+id/btn_play1vsia"
+                android:id="@+id/btn_play1vsai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="26sp"
