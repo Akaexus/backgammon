@@ -33,6 +33,11 @@ class Backgammon : AppCompatActivity() {
                 requireViewById<ImageView>(R.id.dice2)
         )
 
+        var diceBoxes :Array<FlexboxLayout> = arrayOf(
+                requireViewById<FlexboxLayout>(R.id.player1_dices),
+                requireViewById<FlexboxLayout>(R.id.player2_dices)
+        )
+
         // scoreboxes
         var scoreBoxes :Array<LinearLayout> = arrayOf(
                 requireViewById<LinearLayout>(R.id.scorebox1),
@@ -48,6 +53,7 @@ class Backgammon : AppCompatActivity() {
                 ),
                 areas,
                 dices,
+                diceBoxes,
                 requireViewById<LinearLayout>(R.id.dicebox),
                 scoreBoxes
         )

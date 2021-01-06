@@ -61,59 +61,108 @@
                     android:src="@drawable/dice1"
                     />
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/scorebox1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="30dp">
-
-                <TextView
+                android:orientation="horizontal"
+            >
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/player1_dices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:flexDirection="column"
+                    app:alignItems="center"
+                    app:justifyContent="center"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dice1"
+                        android:layout_marginBottom="5dp"
+                    ></ImageView>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dice1"
+                        ></ImageView>
+                </com.google.android.flexbox.FlexboxLayout>
+                <LinearLayout
+                    android:id="@+id/scorebox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="casual"
-                    android:text="@string/you"
-                    android:textSize="20sp"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="casual"
-                    android:text="0 points"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+                        android:text="@string/you"
+                        android:textSize="20sp"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+                        android:text="0 points"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/scorebox2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="30dp">
-
-                <TextView
+                android:layout_marginRight="30dp"
+            >
+                <LinearLayout
+                    android:id="@+id/scorebox2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="casual"
-                    android:text="Enemy"
-                    android:textColor="#ccc"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+                        android:text="Enemy"
+                        android:textColor="#ccc"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+                        android:text="0 points"
+                        android:textColor="#ccc"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/player2_dices"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="casual"
-                    android:text="0 points"
-                    android:textColor="#ccc"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    app:flexDirection="column"
+                    app:alignItems="center"
+                    app:justifyContent="center"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dice1"
+                        android:layout_marginBottom="5dp"
+                        ></ImageView>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dice1"
+                        ></ImageView>
+                </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
-
             <Button
                 android:textColor="#fff"
                 android:layout_width="120dp"

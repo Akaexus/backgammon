@@ -19,6 +19,7 @@ data class Game(
         var players: Array<Player>,
         var areas: ArrayList<FlexboxLayout>,
         var dices: Array<ImageView>,
+        var diceBoxes: Array<FlexboxLayout>,
         var diceBox: LinearLayout,
         var scoreBoxes: Array<LinearLayout>
 ) {
@@ -57,11 +58,13 @@ data class Game(
         }
         Log.i("backgammon_debug", randomValues.toString())
 
-        this.dices.forEachIndexed { index, diceImage -> // update dice icons
+        this.dices.forEachIndexed { index, diceImage -> // update roll dice icons
             var id = context.resources.getIdentifier("dice${randomValues[index]}", "drawable", context.packageName)
             var drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, id, null)
             diceImage.setImageDrawable(drawable)
+            (this.diceBoxes[this.currentPlayer].getChildAt(index) as ImageView).setImageDrawable(drawable)
         }
+
 
         return randomValues
     }
