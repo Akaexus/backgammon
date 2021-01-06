@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.flexbox.FlexboxLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
@@ -115,6 +117,11 @@ data class Game(
                 } else {
                     this.nextPlayer()
                 }
+            }
+
+            if (this.state == ROLL_DICE) {
+                this.getCurrentPlayer().dices = this.rollDice()
+//                this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
             }
         }
     }
