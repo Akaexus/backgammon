@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     suspend fun registerUser(login: String, password: String): User {
-        Log.i("backgammon_debug", "User $login registered")
         val user: User = User(login, this.hashPassword(password))
         user.uid = this.userDao.insert(user).toInt()
         return user

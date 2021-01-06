@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import com.google.android.flexbox.FlexboxLayout
 
@@ -15,7 +17,6 @@ class Backgammon : AppCompatActivity() {
         setContentView(R.layout.activity_backgammon)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         var user: User? = intent.getParcelableExtra<User>("user")
-        Log.i("backgammon_debug", user!!.login)
         var player1 = Player(user, "blue")
         var player2 = Player(null, "red")
 
@@ -26,7 +27,30 @@ class Backgammon : AppCompatActivity() {
             areas.add(requireViewById<FlexboxLayout>(id))
         }
 
-        var game :Game = Game(baseContext, arrayOf(player1, player2), areas)
+        // get dices
+        var dices :Array<ImageView> = arrayOf(
+                requireViewById<ImageView>(R.id.dice1),
+                requireViewById<ImageView>(R.id.dice2)
+        )
+
+        // scoreboxes
+        var scoreBoxes :Array<LinearLayout> = arrayOf(
+                requireViewById<LinearLayout>(R.id.scorebox1),
+                requireViewById<LinearLayout>(R.id.scorebox2)
+        )
+
+
+        var game :Game = Game(
+                baseContext,
+                arrayOf(
+                    player1,
+                    player2
+                ),
+                areas,
+                dices,
+                requireViewById<LinearLayout>(R.id.dicebox),
+                scoreBoxes
+        )
         game.init()
     }
 }

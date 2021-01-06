@@ -18,7 +18,6 @@ class Pawn {
         this.element = ImageView(context)
         val size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, context.resources.getDisplayMetrics()).toInt()
         this.element.layoutParams = FlexboxLayout.LayoutParams(size, size)
-        Log.i("backgammon_debug", this.color)
         this.element.setImageDrawable(context.getDrawable(if (this.color == "red") R.drawable.pawn_red else R.drawable.pawn_blue))
     }
 }

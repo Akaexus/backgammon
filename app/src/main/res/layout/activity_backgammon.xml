@@ -39,6 +39,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/dicebox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -46,6 +47,7 @@
                 android:paddingHorizontal="20dp">
 
                 <ImageView
+                    android:id="@+id/dice1"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:src="@drawable/dice1"
@@ -53,6 +55,7 @@
                     />
 
                 <ImageView
+                    android:id="@+id/dice2"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:src="@drawable/dice1"
@@ -60,6 +63,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/scorebox1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -85,6 +89,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/scorebox2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -96,17 +101,17 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:text="Enemy"
-                    android:textColor="#fff"
+                    android:textColor="#ccc"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:text="0 points"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
+                    android:textColor="#ccc"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <Button
