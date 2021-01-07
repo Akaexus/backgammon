@@ -3,7 +3,6 @@ package com.example.backgammon
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,10 +20,10 @@ class Backgammon : AppCompatActivity() {
         var player2 = Player(null, "red")
 
         // get areas
-        var areas :ArrayList<FlexboxLayout> = ArrayList()
+        var areas :ArrayList<Area> = ArrayList()
         for(i in 0..23) {
             var id: Int = resources.getIdentifier("ll_area_$i", "id", this.packageName)
-            areas.add(requireViewById<FlexboxLayout>(id))
+            areas.add(Area(requireViewById<FlexboxLayout>(id), this.applicationContext))
         }
 
         // get dices

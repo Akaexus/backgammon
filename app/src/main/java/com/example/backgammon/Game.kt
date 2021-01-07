@@ -19,17 +19,18 @@ import kotlin.random.Random
 data class Game(
         var context: Context,
         var players: Array<Player>,
-        var areas: ArrayList<FlexboxLayout>,
+        var areas: ArrayList<Area>,
         var dices: Array<ImageView>,
         var diceBoxes: Array<FlexboxLayout>,
         var diceBox: LinearLayout,
         var scoreBoxes: Array<LinearLayout>
 ) {
     // game board
-    var board = Array<ArrayList<Pawn>>(24) { i -> ArrayList<Pawn>() }
-    var house = Array<ArrayList<Pawn>>(2) { i -> ArrayList<Pawn>() }
+    var house = Array<ArrayList<Pawn>>(2) { _ -> ArrayList<Pawn>() }
     var state:Int = ROLL_DICE_CHOOSE_FIRST_PLAYER
     var currentPlayer:Int = 0 // first player begins
+    var possibleMoves:HashMap<Int, ArrayList<Int>> = hashMapOf()
+    var sourceAreaID:Int = 0
 
     fun setCurrentState(s: Int) {
         Log.i("bacgammon_debug", "setCurrentState(${s})")
@@ -53,8 +54,8 @@ data class Game(
         }
     }
 
-    fun rollDice(doubleIfSame: Boolean = true): List<Int> {
-        var randomValues = List<Int>(2) { Random.nextInt(1, 6)}
+    fun rollDice(doubleIfSame: Boolean = true): ArrayList<Int> {
+        val randomValues = List<Int>(2) { Random.nextInt(1, 6)} as ArrayList<Int>
         if (doubleIfSame && randomValues[0] == randomValues[1]) { // if two same numbers rolled, double
             randomValues += randomValues
         }
@@ -66,13 +67,12 @@ data class Game(
             diceImage.setImageDrawable(drawable)
             (this.diceBoxes[this.currentPlayer].getChildAt(index) as ImageView).setImageDrawable(drawable)
         }
-
-
         return randomValues
     }
 
 
     fun init() {
+        this.players[1].direction = -1
         val initialPivotPositions: Array<Array<IntArray>> = arrayOf(
             arrayOf( // player 1
                     intArrayOf(6-1, 5), // field number, number of pivots on field
@@ -91,8 +91,7 @@ data class Game(
             for (pos in pivotPositions) {
                 repeat(pos[1]) {
                     var pawn = Pawn(this.context, this.players[playerID])
-                    this.board[pos[0]].add(pawn)
-                    areas[pos[0]].addView(pawn.element)
+                    this.areas[pos[0]].addPawn(pawn)
                     // https://stackoverflow.com/questions/44874843/remove-imageview-programmatically-from-custom-layout
                     // +
                     // https://stackoverflow.com/questions/15097950/adding-imageview-to-the-layout-programmatically
@@ -121,7 +120,59 @@ data class Game(
 
             if (this.state == ROLL_DICE) {
                 this.getCurrentPlayer().dices = this.rollDice()
-//                this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+            }
+        }
+
+
+        this.areas.forEach { area ->
+            area.element.setOnClickListener { elem ->
+                val clickedAreaID:Int = this.context.resources.getResourceEntryName(elem.id).filter { it.isDigit() }.toInt()
+                val clickedArea = this.areas[clickedAreaID]
+
+                // CHOOSE PAWN TO MOVE
+                if (this.state == WAIT_TO_CHOOSE_PAWN) {
+                    if (clickedArea.getOwner() == this.getCurrentPlayer()) { // allow to select only own pawns
+                        this.possibleMoves = hashMapOf() // reset possible areas
+                        this.getCurrentPlayer().possibleMoves.forEach{ dices ->
+                            val offset = dices.sum() * this.getCurrentPlayer().direction
+                            val areaID :Int = clickedAreaID + offset
+                            if (areaID in 0 until this.areas.size) { // check if within range
+                                if (this.areas[areaID].canLetPawn(clickedArea.lastPawn()!!)) {
+                                    this.possibleMoves[areaID] = dices
+                                    this.areas[areaID].highlight()
+                                }
+                            }
+                        }
+                        if (this.possibleMoves.size > 0) {
+                            this.sourceAreaID = clickedAreaID
+                            clickedArea.lastPawn()!!.highlight()
+                            this.setCurrentState(PAWN_CHOSEN_CHOOSE_AREA)
+                        }
+                    }
+                }
+
+                if (this.state == PAWN_CHOSEN_CHOOSE_AREA) {
+                    if (clickedAreaID in this.possibleMoves) {
+                        val pawn:Pawn = this.areas[this.sourceAreaID].pop()!!
+                        pawn.unHighlight()
+                        clickedArea.addPawn(pawn)
+                        for (key in this.possibleMoves.keys) {
+                            this.areas[key].unHighlight()
+                        }
+                        Log.i("dices", this.getCurrentPlayer().possibleMoves.toString())
+                        this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
+                            this.getCurrentPlayer().dices.remove(diceNumber)
+                        }
+                        Log.i("dices", this.getCurrentPlayer().possibleMoves.toString())
+                        if (this.getCurrentPlayer().dices.size > 0) {
+                            this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                        } else {
+                            this.setCurrentState(ROLL_DICE)
+                            this.nextPlayer()
+                        }
+                    }
+                }
             }
         }
     }

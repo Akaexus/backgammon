@@ -197,7 +197,7 @@
                 android:id="@+id/constraintLayout4"
                 android:layout_width="0dp"
                 app:layout_constraintWidth_percent="0.5"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/wood2"
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -506,14 +506,25 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/band"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toEndOf="@id/constraintLayout4"
+                app:layout_constraintEnd_toStartOf="@id/constraintLayout5"
+                app:flexDirection="column"
+                app:alignItems="center"
+                app:justifyContent="center" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
                 android:layout_width="0dp"
                 app:layout_constraintWidth_percent="0.45"
-
+                android:layout_marginRight="5dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/wood2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
+                app:layout_constraintStart_toEndOf="@id/band"
                 android:elevation="8dp">
 
                 <LinearLayout

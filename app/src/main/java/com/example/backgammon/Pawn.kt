@@ -1,6 +1,7 @@
 package com.example.backgammon
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
@@ -12,12 +13,28 @@ class Pawn {
     var player:Player
     var color: String
     var element: ImageView
+    var originalDrawable:Drawable?
+    var context:Context
+    var highlighted:Boolean = false
     constructor(context: Context, player: Player) {
+        this.context = context
         this.player = player
         this.color = this.player.color
         this.element = ImageView(context)
         val size = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, context.resources.getDisplayMetrics()).toInt()
         this.element.layoutParams = FlexboxLayout.LayoutParams(size, size)
-        this.element.setImageDrawable(context.getDrawable(if (this.color == "red") R.drawable.pawn_red else R.drawable.pawn_blue))
+        this.originalDrawable = context.getDrawable(if (this.color == "red") R.drawable.pawn_red else R.drawable.pawn_blue)
+        this.element.setImageDrawable(originalDrawable)
     }
+
+    fun highlight() {
+        this.highlighted = true
+        this.element.setImageDrawable(context.getDrawable(R.drawable.pawn_chosen))
+    }
+
+    fun unHighlight() {
+        this.highlighted = false
+        this.element.setImageDrawable(this.originalDrawable)
+    }
+
 }

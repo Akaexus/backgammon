@@ -4,15 +4,16 @@ import android.util.Log
 
 data class Player (val user: User?, var color: String) {
     var score = 0
-    var dices:List<Int> = listOf(0, 0)
+    var direction:Int = 1 // 1 = clockwise, -1 = clockwise
+    var dices:ArrayList<Int> = arrayListOf(0, 0)
         set(value) {
-            field = value.sorted()
-            this.generatePossibleMoves()
+            field = value
         }
     var possibleMoves :MutableSet<ArrayList<Int>> = mutableSetOf()
+        get() = this.generatePossibleMoves()
 
-    private fun generatePossibleMoves() {
-        this.possibleMoves = mutableSetOf()
+    private fun generatePossibleMoves(): MutableSet<ArrayList<Int>> {
+        var movesSet:MutableSet<ArrayList<Int>> = mutableSetOf()
         for (matrix in 0 until Math.pow(2.0, dices.size.toDouble()).toInt()) {
             var moves :ArrayList<Int> = arrayListOf()
             var pattern = matrix
@@ -24,10 +25,11 @@ data class Player (val user: User?, var color: String) {
             }
             if (moves.size > 0) {
                 moves.sort()
-                possibleMoves.add(moves)
+                movesSet.add(moves)
             }
         }
-        Log.i("possibleMoves", this.possibleMoves.toString())
+        Log.i("possibleMoves", movesSet.toString())
+        return movesSet
     }
 
     fun addScore(points: Int) {
