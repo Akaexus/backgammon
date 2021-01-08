@@ -118,10 +118,10 @@ data class Game(
     }
 
 
-    fun generatePossibleMoves(ds:MutableSet<ArrayList<Int>>, areaID:Int) :HashMap<Int, ArrayList<Int>> {
-        var pm:HashMap<Int, ArrayList<Int>> = hashMapOf()
+    private fun generatePossibleMoves(ds:MutableSet<ArrayList<Int>>, areaID:Int) :HashMap<Int, ArrayList<Int>> {
+        val pm:HashMap<Int, ArrayList<Int>> = hashMapOf()
         ds.forEach { diceset ->
-            var candidateAreaID = diceset.sum() * this.getCurrentPlayer().direction + areaID
+            val candidateAreaID = diceset.sum() * this.getCurrentPlayer().direction + areaID
             if (candidateAreaID in this.areas.keys) {
                 if (this.areas[candidateAreaID]!!.canLetPawn(this.getCurrentPlayer())) {
                     pm[candidateAreaID] = diceset
@@ -139,6 +139,17 @@ data class Game(
     fun unhideDices() {
         Log.i("UNHIDE", "UNHIDE")
         this.diceBox.visibility = View.VISIBLE
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun canMakeAnyMove(): Boolean {
+        val diceset: MutableSet<ArrayList<Int>> = this.getCurrentPlayer().diceset
+        this.areas.forEach { (areaID, _) ->
+            if (this.generatePossibleMoves(diceset, areaID).size > 0) {
+                return true
+            }
+        }
+        return false
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -194,7 +205,12 @@ data class Game(
                 if (this.playerPawnsInBand()) {
                     this.setCurrentState(PAWN_IN_BAND_CLICK_ON_PAWN)
                 } else {
-                    this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                    if(this.canMakeAnyMove()) {
+                        this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                    } else {
+                        this.nextPlayer()
+                        Toast.makeText(context, "Can't make any move! Now ${this.getCurrentPlayer().getUsername()} plays!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -203,10 +219,8 @@ data class Game(
 
         this.areas.forEach { _, area ->
             area.element.setOnClickListener { elem ->
-//                if (this.playerPawnsInBand()) {
-//                    return@setOnClickListener
-//                }
-                val clickedAreaID:Int = this.context.resources.getResourceEntryName(elem.id).filter { it.isDigit() }.toInt()
+                var tag:Int? = (elem.tag as String?)?.toIntOrNull()
+                val clickedAreaID:Int = tag ?: this.context.resources.getResourceEntryName(elem.id).filter { it.isDigit() }.toInt()
                 val clickedArea = this.areas[clickedAreaID]
 
                 // CHOOSE PAWN TO MOVE
@@ -225,6 +239,7 @@ data class Game(
                 }
 
                 if (this.state == PAWN_CHOSEN_CHOOSE_AREA) {
+                    Log.i("clickedAreaID", clickedAreaID.toString())
                     if (clickedAreaID in this.possibleMoves) {
                         val pawn:Pawn = this.areas[this.sourceAreaID]!!.pop()!!
                         pawn.unHighlight()
