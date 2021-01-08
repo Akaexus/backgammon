@@ -9,10 +9,10 @@ data class Player (val user: User?, var color: String) {
         set(value) {
             field = value
         }
-    var possibleMoves :MutableSet<ArrayList<Int>> = mutableSetOf()
-        get() = this.generatePossibleMoves()
+    var diceset :MutableSet<ArrayList<Int>> = mutableSetOf()
+        get() = this.generateDiceset()
 
-    private fun generatePossibleMoves(): MutableSet<ArrayList<Int>> {
+    private fun generateDiceset(): MutableSet<ArrayList<Int>> {
         var movesSet:MutableSet<ArrayList<Int>> = mutableSetOf()
         for (matrix in 0 until Math.pow(2.0, dices.size.toDouble()).toInt()) {
             var moves :ArrayList<Int> = arrayListOf()

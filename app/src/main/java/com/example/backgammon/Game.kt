@@ -3,15 +3,16 @@ package com.example.backgammon
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.flexbox.FlexboxLayout
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
@@ -23,7 +24,8 @@ data class Game(
         var dices: Array<ImageView>,
         var diceBoxes: Array<FlexboxLayout>,
         var diceBox: LinearLayout,
-        var scoreBoxes: Array<LinearLayout>
+        var scoreBoxes: Array<LinearLayout>,
+        var bandElement: FlexboxLayout
 ) {
     // game board
     var house = Array<ArrayList<Pawn>>(2) { _ -> ArrayList<Pawn>() }
@@ -31,9 +33,16 @@ data class Game(
     var currentPlayer:Int = 0 // first player begins
     var possibleMoves:HashMap<Int, ArrayList<Int>> = hashMapOf()
     var sourceAreaID:Int = 0
+    var band :ArrayList<Pawn> = arrayListOf()
 
     fun setCurrentState(s: Int) {
         Log.i("bacgammon_debug", "setCurrentState(${s})")
+        if (s == ROLL_DICE || s == ROLL_DICE_CHOOSE_FIRST_PLAYER) {
+            this.unhideDices()
+        }
+        if (this.state == ROLL_DICE or ROLL_DICE_CHOOSE_FIRST_PLAYER) {
+            this.hideDices()
+        }
         this.state = s
     }
 
@@ -70,7 +79,69 @@ data class Game(
         return randomValues
     }
 
+    fun addToBand(pawn: Pawn) {
+        this.band.add(pawn)
+        this.bandElement.addView(pawn.element)
+    }
 
+    fun playerPawnsInBand(): Boolean {
+        val currentPlayer:Player = this.getCurrentPlayer()
+        for (pawn in this.band) {
+            if (pawn.player == currentPlayer) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun getLastPawnInBand(): Pawn? {
+        var currentPlayer:Player = this.getCurrentPlayer()
+        for (i in this.band.size-1 downTo 0) {
+            if (this.band[i].player == currentPlayer) {
+                return this.band[i]
+            }
+        }
+        return null
+    }
+
+    fun popFromBand() : Pawn? {
+        var currentPlayer:Player = this.getCurrentPlayer()
+        for (i in this.band.size-1 downTo 0) {
+            if (this.band[i].player == currentPlayer) {
+                val pawn:Pawn = this.band[i]
+                this.bandElement.removeViewAt(i)
+                this.band.removeAt(i)
+                return pawn
+            }
+        }
+        return null
+    }
+
+
+    fun generatePossibleMoves(ds:MutableSet<ArrayList<Int>>, areaID:Int, pawn:Pawn) :HashMap<Int, ArrayList<Int>> {
+        var pm:HashMap<Int, ArrayList<Int>> = hashMapOf()
+        ds.forEach { diceset ->
+            var candidateAreaID = diceset.sum() * this.getCurrentPlayer().direction + areaID
+            if (candidateAreaID in 0 until this.areas.size) {
+                if (this.areas[candidateAreaID].canLetPawn(pawn)) {
+                    pm[candidateAreaID] = diceset
+                }
+            }
+        }
+        return pm
+    }
+
+    fun hideDices() {
+        Log.i("HIDE", "HIDE")
+        this.diceBox.visibility = View.INVISIBLE
+    }
+
+    fun unhideDices() {
+        Log.i("UNHIDE", "UNHIDE")
+        this.diceBox.visibility = View.VISIBLE
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     fun init() {
         this.players[1].direction = -1
         val initialPivotPositions: Array<Array<IntArray>> = arrayOf(
@@ -120,29 +191,30 @@ data class Game(
 
             if (this.state == ROLL_DICE) {
                 this.getCurrentPlayer().dices = this.rollDice()
-                this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                if (this.playerPawnsInBand()) {
+                    this.setCurrentState(PAWN_IN_BAND_CLICK_ON_PAWN)
+                } else {
+                    this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                }
             }
         }
 
 
+
         this.areas.forEach { area ->
             area.element.setOnClickListener { elem ->
+//                if (this.playerPawnsInBand()) {
+//                    return@setOnClickListener
+//                }
                 val clickedAreaID:Int = this.context.resources.getResourceEntryName(elem.id).filter { it.isDigit() }.toInt()
                 val clickedArea = this.areas[clickedAreaID]
 
                 // CHOOSE PAWN TO MOVE
                 if (this.state == WAIT_TO_CHOOSE_PAWN) {
                     if (clickedArea.getOwner() == this.getCurrentPlayer()) { // allow to select only own pawns
-                        this.possibleMoves = hashMapOf() // reset possible areas
-                        this.getCurrentPlayer().possibleMoves.forEach{ dices ->
-                            val offset = dices.sum() * this.getCurrentPlayer().direction
-                            val areaID :Int = clickedAreaID + offset
-                            if (areaID in 0 until this.areas.size) { // check if within range
-                                if (this.areas[areaID].canLetPawn(clickedArea.lastPawn()!!)) {
-                                    this.possibleMoves[areaID] = dices
-                                    this.areas[areaID].highlight()
-                                }
-                            }
+                        this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, clickedAreaID, clickedArea.lastPawn()!!)
+                        this.possibleMoves.forEach { areaID, diceset ->
+                            this.areas[areaID].highlight()
                         }
                         if (this.possibleMoves.size > 0) {
                             this.sourceAreaID = clickedAreaID
@@ -156,15 +228,40 @@ data class Game(
                     if (clickedAreaID in this.possibleMoves) {
                         val pawn:Pawn = this.areas[this.sourceAreaID].pop()!!
                         pawn.unHighlight()
-                        clickedArea.addPawn(pawn)
+                        val leftOverPawn:Pawn? = clickedArea.addPawn(pawn)
+                        // add leftover pawn to the band
+                        if (leftOverPawn != null) {
+                            this.addToBand(leftOverPawn)
+                        }
                         for (key in this.possibleMoves.keys) {
                             this.areas[key].unHighlight()
                         }
-                        Log.i("dices", this.getCurrentPlayer().possibleMoves.toString())
                         this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
                             this.getCurrentPlayer().dices.remove(diceNumber)
                         }
-                        Log.i("dices", this.getCurrentPlayer().possibleMoves.toString())
+                        if (this.getCurrentPlayer().dices.size > 0) {
+                            this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
+                        } else {
+                            this.setCurrentState(ROLL_DICE)
+                            this.nextPlayer()
+                        }
+                    }
+                }
+
+                if (this.state == PAWN_IN_BAND_CHOOSE_AREA) {
+                    if (clickedAreaID in this.possibleMoves) {
+                        var pawn:Pawn = this.popFromBand()!!
+                        pawn.unHighlight()
+                        var leftOverPawn:Pawn? = clickedArea.addPawn(pawn)
+                        if (leftOverPawn != null) {
+                            this.addToBand(leftOverPawn)
+                        }
+                        for (key in this.possibleMoves.keys) {
+                            this.areas[key].unHighlight()
+                        }
+                        this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
+                            this.getCurrentPlayer().dices.remove(diceNumber)
+                        }
                         if (this.getCurrentPlayer().dices.size > 0) {
                             this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
                         } else {
@@ -175,6 +272,20 @@ data class Game(
                 }
             }
         }
+
+        this.bandElement.setOnClickListener {
+            if (this.state == PAWN_IN_BAND_CLICK_ON_PAWN) {
+                val pawn:Pawn = this.getLastPawnInBand()!!
+                pawn.highlight()
+                val player:Player = this.getCurrentPlayer()
+                val startArea = if (player.direction == 1) -1 else this.areas.size
+                this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, startArea, pawn)
+                this.possibleMoves.forEach { areaID, _ ->
+                    this.areas[areaID].highlight()
+                }
+                this.setCurrentState(PAWN_IN_BAND_CHOOSE_AREA)
+            }
+        }
     }
 
     companion object {
@@ -182,6 +293,8 @@ data class Game(
         const val ROLL_DICE = 1
         const val WAIT_TO_CHOOSE_PAWN = 2
         const val PAWN_CHOSEN_CHOOSE_AREA = 3
+        const val PAWN_IN_BAND_CLICK_ON_PAWN = 4
+        const val PAWN_IN_BAND_CHOOSE_AREA = 5
     }
 
 }

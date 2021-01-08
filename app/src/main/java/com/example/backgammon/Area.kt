@@ -28,9 +28,14 @@ class Area {
         this.image.setImageDrawable(this.originalDrawable)
     }
 
-    fun addPawn(pawn: Pawn) {
+    fun addPawn(pawn: Pawn): Pawn? {
+        var leftOverPawn:Pawn? = null
+        if (this.getSize() == 1 && this.lastPawn()!!.player != pawn.player) {
+             leftOverPawn = this.pop()
+        }
         this.pawns.add(pawn)
         this.element.addView(pawn.element)
+        return leftOverPawn
     }
 
     fun getSize(): Int {

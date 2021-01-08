@@ -54,7 +54,8 @@ class Backgammon : AppCompatActivity() {
                 dices,
                 diceBoxes,
                 requireViewById<LinearLayout>(R.id.dicebox),
-                scoreBoxes
+                scoreBoxes,
+                requireViewById<FlexboxLayout>(R.id.band)
         )
         game.init()
     }
