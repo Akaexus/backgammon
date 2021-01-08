@@ -825,43 +825,27 @@
             app:layout_constraintEnd_toEndOf="parent">
 
 
-            <LinearLayout
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/dock_24"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.45"
+                app:layout_constraintHeight_percent="0.48"
                 android:background="@drawable/wood2"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:flexDirection="column"
+                app:flexWrap="wrap"
+                app:alignItems="center"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dock"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/dock_minus_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/wood2"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHeight_percent="0.45">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dock"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
-            </LinearLayout>
+                app:layout_constraintHeight_percent="0.48"
+                app:flexDirection="column"
+                app:flexWrap="wrap"
+                app:alignItems="center"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

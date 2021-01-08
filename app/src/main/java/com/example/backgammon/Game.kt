@@ -20,7 +20,7 @@ import kotlin.random.Random
 data class Game(
         var context: Context,
         var players: Array<Player>,
-        var areas: ArrayList<Area>,
+        var areas: HashMap<Int,Area>,
         var dices: Array<ImageView>,
         var diceBoxes: Array<FlexboxLayout>,
         var diceBox: LinearLayout,
@@ -118,12 +118,12 @@ data class Game(
     }
 
 
-    fun generatePossibleMoves(ds:MutableSet<ArrayList<Int>>, areaID:Int, pawn:Pawn) :HashMap<Int, ArrayList<Int>> {
+    fun generatePossibleMoves(ds:MutableSet<ArrayList<Int>>, areaID:Int) :HashMap<Int, ArrayList<Int>> {
         var pm:HashMap<Int, ArrayList<Int>> = hashMapOf()
         ds.forEach { diceset ->
             var candidateAreaID = diceset.sum() * this.getCurrentPlayer().direction + areaID
-            if (candidateAreaID in 0 until this.areas.size) {
-                if (this.areas[candidateAreaID].canLetPawn(pawn)) {
+            if (candidateAreaID in this.areas.keys) {
+                if (this.areas[candidateAreaID]!!.canLetPawn(this.getCurrentPlayer())) {
                     pm[candidateAreaID] = diceset
                 }
             }
@@ -162,7 +162,7 @@ data class Game(
             for (pos in pivotPositions) {
                 repeat(pos[1]) {
                     var pawn = Pawn(this.context, this.players[playerID])
-                    this.areas[pos[0]].addPawn(pawn)
+                    this.areas[pos[0]]!!.addPawn(pawn)
                     // https://stackoverflow.com/questions/44874843/remove-imageview-programmatically-from-custom-layout
                     // +
                     // https://stackoverflow.com/questions/15097950/adding-imageview-to-the-layout-programmatically
@@ -201,7 +201,7 @@ data class Game(
 
 
 
-        this.areas.forEach { area ->
+        this.areas.forEach { _, area ->
             area.element.setOnClickListener { elem ->
 //                if (this.playerPawnsInBand()) {
 //                    return@setOnClickListener
@@ -211,10 +211,10 @@ data class Game(
 
                 // CHOOSE PAWN TO MOVE
                 if (this.state == WAIT_TO_CHOOSE_PAWN) {
-                    if (clickedArea.getOwner() == this.getCurrentPlayer()) { // allow to select only own pawns
-                        this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, clickedAreaID, clickedArea.lastPawn()!!)
-                        this.possibleMoves.forEach { areaID, diceset ->
-                            this.areas[areaID].highlight()
+                    if (clickedArea!!.getOwner() == this.getCurrentPlayer()) { // allow to select only own pawns
+                        this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, clickedAreaID)
+                        this.possibleMoves.forEach { areaID, _ ->
+                            this.areas[areaID]!!.highlight()
                         }
                         if (this.possibleMoves.size > 0) {
                             this.sourceAreaID = clickedAreaID
@@ -226,15 +226,15 @@ data class Game(
 
                 if (this.state == PAWN_CHOSEN_CHOOSE_AREA) {
                     if (clickedAreaID in this.possibleMoves) {
-                        val pawn:Pawn = this.areas[this.sourceAreaID].pop()!!
+                        val pawn:Pawn = this.areas[this.sourceAreaID]!!.pop()!!
                         pawn.unHighlight()
-                        val leftOverPawn:Pawn? = clickedArea.addPawn(pawn)
+                        val leftOverPawn:Pawn? = clickedArea!!.addPawn(pawn)
                         // add leftover pawn to the band
                         if (leftOverPawn != null) {
                             this.addToBand(leftOverPawn)
                         }
                         for (key in this.possibleMoves.keys) {
-                            this.areas[key].unHighlight()
+                            this.areas[key]!!.unHighlight()
                         }
                         this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
                             this.getCurrentPlayer().dices.remove(diceNumber)
@@ -252,12 +252,12 @@ data class Game(
                     if (clickedAreaID in this.possibleMoves) {
                         var pawn:Pawn = this.popFromBand()!!
                         pawn.unHighlight()
-                        var leftOverPawn:Pawn? = clickedArea.addPawn(pawn)
+                        var leftOverPawn:Pawn? = clickedArea!!.addPawn(pawn)
                         if (leftOverPawn != null) {
                             this.addToBand(leftOverPawn)
                         }
                         for (key in this.possibleMoves.keys) {
-                            this.areas[key].unHighlight()
+                            this.areas[key]!!.unHighlight()
                         }
                         this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
                             this.getCurrentPlayer().dices.remove(diceNumber)
@@ -279,9 +279,13 @@ data class Game(
                 pawn.highlight()
                 val player:Player = this.getCurrentPlayer()
                 val startArea = if (player.direction == 1) -1 else this.areas.size
-                this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, startArea, pawn)
+                this.possibleMoves = this.generatePossibleMoves(this.getCurrentPlayer().diceset, startArea)
+                if (this.possibleMoves.size == 0) { // cant move pawn, skip turn
+                    this.setCurrentState(ROLL_DICE)
+                    this.nextPlayer()
+                }
                 this.possibleMoves.forEach { areaID, _ ->
-                    this.areas[areaID].highlight()
+                    this.areas[areaID]!!.highlight()
                 }
                 this.setCurrentState(PAWN_IN_BAND_CHOOSE_AREA)
             }
@@ -296,5 +300,4 @@ data class Game(
         const val PAWN_IN_BAND_CLICK_ON_PAWN = 4
         const val PAWN_IN_BAND_CHOOSE_AREA = 5
     }
-
 }

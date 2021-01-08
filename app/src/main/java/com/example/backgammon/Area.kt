@@ -9,23 +9,35 @@ import com.google.android.flexbox.FlexboxLayout
 class Area {
     var element: FlexboxLayout
     var pawns:ArrayList<Pawn> = arrayListOf()
-    private var image:ImageView
-    private var originalDrawable: Drawable
-    private var highlightDrawable: Drawable
+    private lateinit var image:ImageView
+    private lateinit var originalDrawable: Drawable
+    private lateinit var highlightDrawable: Drawable
+    var type = TYPE_NORMAL
 
-    constructor(element: FlexboxLayout, context: Context) {
+    constructor(element: FlexboxLayout, context: Context, t:Int = TYPE_NORMAL) {
         this.element = element
-        this.image = (element.parent as ViewGroup).getChildAt(0) as ImageView
-        this.originalDrawable = this.image.drawable
-        this.highlightDrawable = context.getDrawable(R.drawable.triangle_green)!!
+        this.type = t
+        if (this.type == TYPE_NORMAL) {
+            this.image = (element.parent as ViewGroup).getChildAt(0) as ImageView
+            this.originalDrawable = this.image.drawable
+            this.highlightDrawable = context.getDrawable(R.drawable.triangle_green)!!
+        }
     }
 
     fun highlight() {
-        this.image.setImageDrawable(this.highlightDrawable)
+        if (this.type == TYPE_NORMAL) {
+            this.image.setImageDrawable(this.highlightDrawable)
+        } else {
+            this.element.setBackgroundResource(R.drawable.wood2_highlight)
+        }
     }
 
     fun unHighlight() {
-        this.image.setImageDrawable(this.originalDrawable)
+        if (this.type == TYPE_NORMAL) {
+            this.image.setImageDrawable(this.originalDrawable)
+        } else {
+            this.element.setBackgroundResource(R.drawable.wood2)
+        }
     }
 
     fun addPawn(pawn: Pawn): Pawn? {
@@ -57,7 +69,11 @@ class Area {
     }
 
     fun canLetPawn(pawn: Pawn): Boolean {
-        if (this.getSize() > 1 && pawn.player != this.getOwner()) {
+        return this.canLetPawn(pawn.player)
+    }
+
+    fun canLetPawn(player: Player): Boolean {
+        if (this.getSize() > 1 &&player != this.getOwner()) {
             return false
         }
         return true
@@ -71,5 +87,9 @@ class Area {
             return pawn
         }
         return null
+    }
+    companion object {
+        const val TYPE_NORMAL = 0
+        const val TYPE_DOCK = 1
     }
 }

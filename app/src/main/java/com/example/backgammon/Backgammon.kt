@@ -20,10 +20,12 @@ class Backgammon : AppCompatActivity() {
         var player2 = Player(null, "red")
 
         // get areas
-        var areas :ArrayList<Area> = ArrayList()
+        var areas :HashMap<Int, Area> = hashMapOf()
+        areas[-1] = Area(requireViewById<FlexboxLayout>(R.id.dock_minus_1), this.applicationContext, Area.TYPE_DOCK)
+        areas[24] = Area(requireViewById<FlexboxLayout>(R.id.dock_24), this.applicationContext, Area.TYPE_DOCK)
         for(i in 0..23) {
             var id: Int = resources.getIdentifier("ll_area_$i", "id", this.packageName)
-            areas.add(Area(requireViewById<FlexboxLayout>(id), this.applicationContext))
+            areas[i] = (Area(requireViewById<FlexboxLayout>(id), this.applicationContext))
         }
 
         // get dices
