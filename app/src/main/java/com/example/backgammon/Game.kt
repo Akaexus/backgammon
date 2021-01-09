@@ -18,9 +18,12 @@ import com.google.android.flexbox.FlexboxLayout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 import java.util.Collections.max
 import java.util.Collections.min
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.properties.Delegates
 import kotlin.random.Random
 import kotlin.reflect.KFunction2
 
@@ -34,7 +37,8 @@ data class Game(
         var diceBox: LinearLayout,
         var scoreBoxes: Array<LinearLayout>,
         var bandElement: FlexboxLayout,
-        val finish: KFunction2<Array<Player>, Int, Unit>
+        val finish: KFunction2<Array<Player>, Int, Unit>,
+        var timerElement: TextView
 ) {
     // game board
     var house = Array<ArrayList<Pawn>>(2) { _ -> ArrayList<Pawn>() }
@@ -44,6 +48,8 @@ data class Game(
     var sourceAreaID:Int = 0
     var band :ArrayList<Pawn> = arrayListOf()
     var pawnsPerPlayer:Int = 0
+    var timeStarted by Delegates.notNull<Long>()
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun setCurrentState(s: Int) {
@@ -422,6 +428,19 @@ data class Game(
                 this.bandOnClick()
             }
         }
+        this.timeStarted = Calendar.getInstance().timeInMillis
+
+        Handler(Looper.getMainLooper()).post(object : Runnable {
+            override fun run() {
+                updateTimer()
+                Handler(Looper.getMainLooper()).postDelayed(this, 1000)
+            }
+        })
+    }
+
+    fun updateTimer() {
+        var seconds_passed:Long = (Calendar.getInstance().timeInMillis - this.timeStarted)/1000
+        this.timerElement.text = "${(seconds_passed / 60).toLong()}:${(seconds_passed%60).toString().padStart(2, '0')}"
     }
 
     companion object {

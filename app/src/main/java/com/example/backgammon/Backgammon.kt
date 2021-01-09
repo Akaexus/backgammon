@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.google.android.flexbox.FlexboxLayout
-import org.w3c.dom.Text
 
 class Backgammon : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
@@ -77,7 +76,8 @@ class Backgammon : AppCompatActivity() {
                 requireViewById<LinearLayout>(R.id.dicebox),
                 scoreBoxes,
                 requireViewById<FlexboxLayout>(R.id.band),
-                ::onFinish
+                ::onFinish,
+                requireViewById<TextView>(R.id.timer)
         )
         game.init()
     }

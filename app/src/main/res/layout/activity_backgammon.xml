@@ -16,10 +16,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/timer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/backgammon"
+            android:text="0:00"
             android:textSize="37sp"
             android:textAlignment="center"
             android:textColor="#fff"
