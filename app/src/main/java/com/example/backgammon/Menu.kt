@@ -29,7 +29,7 @@ class Menu : AppCompatActivity() {
             intent.putExtra("user1", user)
             intent.putExtra("mode", "ai")
             startActivity(intent)
-            finish()
+//            finish()
         }
         var btn_play1vs1 = requireViewById<Button>(R.id.btn_play1vs1)
         btn_play1vs1.setOnClickListener {
@@ -37,7 +37,7 @@ class Menu : AppCompatActivity() {
             intent.putExtra("user1", user)
             intent.putExtra("mode", "normal")
             startActivity(intent)
-            finish()
+//            finish()
         }
 
     }

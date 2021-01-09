@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -13,19 +15,26 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.flexbox.FlexboxLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Collections.max
+import java.util.Collections.min
 import kotlin.collections.ArrayList
 import kotlin.random.Random
+import kotlin.reflect.KFunction2
 
 
 data class Game(
         var context: Context,
         var players: Array<Player>,
-        var areas: HashMap<Int,Area>,
+        var areas: HashMap<Int, Area>,
         var dices: Array<ImageView>,
         var diceBoxes: Array<FlexboxLayout>,
         var diceBox: LinearLayout,
         var scoreBoxes: Array<LinearLayout>,
-        var bandElement: FlexboxLayout
+        var bandElement: FlexboxLayout,
+        val finish: KFunction2<Array<Player>, Int, Unit>
 ) {
     // game board
     var house = Array<ArrayList<Pawn>>(2) { _ -> ArrayList<Pawn>() }
@@ -34,6 +43,7 @@ data class Game(
     var possibleMoves:HashMap<Int, ArrayList<Int>> = hashMapOf()
     var sourceAreaID:Int = 0
     var band :ArrayList<Pawn> = arrayListOf()
+    var pawnsPerPlayer:Int = 0
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun setCurrentState(s: Int) {
@@ -44,27 +54,59 @@ data class Game(
         if (this.state == ROLL_DICE or ROLL_DICE_CHOOSE_FIRST_PLAYER) {
             this.hideDices()
         }
+
         this.state = s
+
+        // check if can make any move
+        if (this.state == WAIT_TO_CHOOSE_PAWN) {
+            if (!this.canMakeAnyMove()) {
+                this.nextPlayer()
+                this.setCurrentState(ROLL_DICE)
+                Toast.makeText(context, "Can't make any move! Now ${this.getCurrentPlayer().getUsername()} plays!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // AI MODE
         if (this.getCurrentPlayer().isAI()) {
             if (this.state == PAWN_IN_BAND_CLICK_ON_PAWN) {
-                this.bandOnClick()
+                GlobalScope.launch {
+                    delay(200)
+                    Handler(Looper.getMainLooper()).post {
+                        this@Game.bandOnClick()
+                    }
+                }
             }
             if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER || this.state == ROLL_DICE) {
-                this.diceBoxOnClick()
+                GlobalScope.launch {
+                    delay(200)
+                    Handler(Looper.getMainLooper()).post {
+                        this@Game.diceBoxOnClick()
+                    }
+                }
+
             }
 
             if (this.state == WAIT_TO_CHOOSE_PAWN) {
                 val diceset: MutableSet<ArrayList<Int>> = this.getCurrentPlayer().diceset
                 this.areas.forEach { (areaID, area) ->
                     if (this.generatePossibleMoves(diceset, areaID).size > 0) {
-                        this.areaOnClick(area.element)
+                        GlobalScope.launch {
+                            delay(200)
+                            Handler(Looper.getMainLooper()).post {
+                                this@Game.areaOnClick(area.element)
+                            }
+                        }
                     }
                 }
             }
 
             if (this.state == PAWN_CHOSEN_CHOOSE_AREA || this.state == PAWN_IN_BAND_CHOOSE_AREA) {
-                this.areaOnClick(this.areas[this.possibleMoves.keys.random()]!!.element)
+                GlobalScope.launch {
+                    delay(200)
+                    Handler(Looper.getMainLooper()).post {
+                        this@Game.areaOnClick(this@Game.areas[this@Game.possibleMoves.keys.random()]!!.element)
+                    }
+                }
             }
         }
     }
@@ -86,7 +128,12 @@ data class Game(
             }
         }
         if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER && this.getCurrentPlayer().isAI()) {
-            this.diceBoxOnClick()
+            GlobalScope.launch {
+                delay(1000)
+                Handler(Looper.getMainLooper()).post {
+                    this@Game.diceBoxOnClick()
+                }
+            }
         }
     }
 
@@ -153,6 +200,7 @@ data class Game(
                 }
             }
         }
+        Log.i("possibleMoves", "using diceset ${ds.toString()} at areaID ${areaID} = ${pm.toString()}")
         return pm
     }
 
@@ -166,12 +214,17 @@ data class Game(
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun canMakeAnyMove(): Boolean {
+        Log.i("can_make_any_move", "invoked")
         val diceset: MutableSet<ArrayList<Int>> = this.getCurrentPlayer().diceset
-        this.areas.forEach { (areaID, _) ->
-            if (this.generatePossibleMoves(diceset, areaID).size > 0) {
-                return true
+        this.areas.forEach { (areaID, area) ->
+            if (area.getOwner() == this.getCurrentPlayer()) {
+                if (this.generatePossibleMoves(diceset, areaID).size > 0) {
+                    Log.i("can_make_any_move", "true, ${this.generatePossibleMoves(diceset, areaID).toString()}")
+                    return true
+                }
             }
         }
+        Log.i("can_make_any_move", "false")
         return false
     }
 
@@ -203,14 +256,19 @@ data class Game(
             if (this.playerPawnsInBand()) {
                 this.setCurrentState(PAWN_IN_BAND_CLICK_ON_PAWN)
             } else {
-                if(this.canMakeAnyMove()) {
-                    this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
-                } else {
-                    this.nextPlayer()
-                    Toast.makeText(context, "Can't make any move! Now ${this.getCurrentPlayer().getUsername()} plays!", Toast.LENGTH_SHORT).show()
-                }
+                this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
             }
         }
+    }
+
+    fun checkIfWin():Boolean {
+        val player:Player = this.getCurrentPlayer()
+        val areaID = if (player.direction == 1) max(this.areas.keys) else min(this.areas.keys)
+        Log.i("checkIfWin", "${this.areas[areaID]!!.getSize()} (areaID ${areaID} == ${this.pawnsPerPlayer}(pawnsPerPlayer) for player ${this.getCurrentPlayer().getUsername()}")
+        if (this.areas[areaID]!!.getSize() == this.pawnsPerPlayer) {
+            return true
+        }
+        return false
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -248,6 +306,9 @@ data class Game(
                 }
                 this.possibleMoves[clickedAreaID]?.forEach { diceNumber ->
                     this.getCurrentPlayer().dices.remove(diceNumber)
+                }
+                if (this.checkIfWin()) {
+                    this.finish(this.players, this.currentPlayer)
                 }
                 if (this.getCurrentPlayer().dices.size > 0) {
                     this.setCurrentState(WAIT_TO_CHOOSE_PAWN)
@@ -318,6 +379,8 @@ data class Game(
                     intArrayOf(19-1, 5),
             ),
         )
+        this.pawnsPerPlayer = initialPivotPositions[0].map { e -> e[1] }.sum()
+        Log.i("pawns_per_player", this.pawnsPerPlayer.toString())
         initialPivotPositions.forEachIndexed { playerID, pivotPositions ->
             for (pos in pivotPositions) {
                 repeat(pos[1]) {

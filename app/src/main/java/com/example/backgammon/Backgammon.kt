@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.android.flexbox.FlexboxLayout
 
@@ -37,6 +38,7 @@ class Backgammon : AppCompatActivity() {
             areas[i] = (Area(requireViewById<FlexboxLayout>(id), this.applicationContext))
         }
 
+
         // get dices
         var dices :Array<ImageView> = arrayOf(
                 requireViewById<ImageView>(R.id.dice1),
@@ -66,8 +68,14 @@ class Backgammon : AppCompatActivity() {
                 diceBoxes,
                 requireViewById<LinearLayout>(R.id.dicebox),
                 scoreBoxes,
-                requireViewById<FlexboxLayout>(R.id.band)
+                requireViewById<FlexboxLayout>(R.id.band),
+                ::onFinish
         )
         game.init()
+    }
+
+    fun onFinish(players:Array<Player>, winner:Int) {
+        Toast.makeText(baseContext, "Player ${players[winner].getUsername()} wins!", Toast.LENGTH_LONG).show()
+        finish()
     }
 }

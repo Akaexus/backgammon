@@ -28,7 +28,7 @@ data class Player (val user: User?, var color: String, var mode:Int = MODE_PLAYE
                 movesSet.add(moves)
             }
         }
-        Log.i("possibleMoves", movesSet.toString())
+        Log.i("diceSet", movesSet.toString())
         return movesSet
     }
 
