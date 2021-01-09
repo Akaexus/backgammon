@@ -2,7 +2,7 @@ package com.example.backgammon
 
 import android.util.Log
 
-data class Player (val user: User?, var color: String) {
+data class Player (val user: User?, var color: String, var mode:Int = MODE_PLAYER) {
     var score = 0
     var direction:Int = 1 // 1 = clockwise, -1 = clockwise
     var dices:ArrayList<Int> = arrayListOf(0, 0)
@@ -40,9 +40,19 @@ data class Player (val user: User?, var color: String) {
         if (this.user != null) {
             return this.user.login
         }
+        if (this.mode == MODE_PLAYER) {
+            return "Enemy"
+        }
         return "AI"
     }
 
+    fun isAI(): Boolean {
+        return this.mode == MODE_AI
+    }
 
 
+    companion object {
+        const val MODE_PLAYER = 0
+        const val MODE_AI = 1
+    }
 }

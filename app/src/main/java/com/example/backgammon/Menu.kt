@@ -26,7 +26,16 @@ class Menu : AppCompatActivity() {
         var btn_play1vsai = requireViewById<Button>(R.id.btn_play1vsai)
         btn_play1vsai.setOnClickListener {
             val intent = Intent(this, Backgammon::class.java)
-            intent.putExtra("user", user)
+            intent.putExtra("user1", user)
+            intent.putExtra("mode", "ai")
+            startActivity(intent)
+            finish()
+        }
+        var btn_play1vs1 = requireViewById<Button>(R.id.btn_play1vs1)
+        btn_play1vs1.setOnClickListener {
+            val intent = Intent(this, Backgammon::class.java)
+            intent.putExtra("user1", user)
+            intent.putExtra("mode", "normal")
             startActivity(intent)
             finish()
         }

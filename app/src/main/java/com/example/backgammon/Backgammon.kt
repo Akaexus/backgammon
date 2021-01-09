@@ -3,6 +3,7 @@ package com.example.backgammon
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -15,9 +16,17 @@ class Backgammon : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_backgammon)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        var user: User? = intent.getParcelableExtra<User>("user")
-        var player1 = Player(user, "blue")
-        var player2 = Player(null, "red")
+        var user1: User? = intent.getParcelableExtra<User>("user1")
+        var user2: User? = intent.getParcelableExtra<User>("user2")
+        if (user1 != null) {
+            Log.i("user1", user1.login)
+        }
+        if (user2 != null) {
+            Log.i("user2", user2.login)
+        }
+        var mode: String? = intent.getStringExtra("mode")
+        var player1 = Player(user1, "blue")
+        var player2 = Player(user2, "red", if (mode != null && mode == "ai") Player.MODE_AI else Player.MODE_PLAYER)
 
         // get areas
         var areas :HashMap<Int, Area> = hashMapOf()
