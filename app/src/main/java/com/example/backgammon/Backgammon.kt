@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import com.google.android.flexbox.FlexboxLayout
+import org.w3c.dom.Text
 
 class Backgammon : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
@@ -17,6 +16,13 @@ class Backgammon : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_backgammon)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        var btn_menu:Button = requireViewById<Button>(R.id.btn_menu)
+        btn_menu.setOnClickListener {
+            finish()
+        }
+
+
         var user1: User? = intent.getParcelableExtra<User>("user1")
         var user2: User? = intent.getParcelableExtra<User>("user2")
         if (user1 != null) {
@@ -55,6 +61,8 @@ class Backgammon : AppCompatActivity() {
                 requireViewById<LinearLayout>(R.id.scorebox1),
                 requireViewById<LinearLayout>(R.id.scorebox2)
         )
+        player1.addScorebox(requireViewById<LinearLayout>(R.id.scorebox1))
+        player2.addScorebox(requireViewById<LinearLayout>(R.id.scorebox2))
 
 
         var game :Game = Game(

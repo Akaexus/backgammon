@@ -70,7 +70,7 @@ data class Game(
         if (this.getCurrentPlayer().isAI()) {
             if (this.state == PAWN_IN_BAND_CLICK_ON_PAWN) {
                 GlobalScope.launch {
-                    delay(200)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.bandOnClick()
                     }
@@ -78,7 +78,7 @@ data class Game(
             }
             if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER || this.state == ROLL_DICE) {
                 GlobalScope.launch {
-                    delay(200)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.diceBoxOnClick()
                     }
@@ -91,7 +91,7 @@ data class Game(
                 this.areas.forEach { (areaID, area) ->
                     if (this.generatePossibleMoves(diceset, areaID).size > 0) {
                         GlobalScope.launch {
-                            delay(200)
+                            delay(800)
                             Handler(Looper.getMainLooper()).post {
                                 this@Game.areaOnClick(area.element)
                             }
@@ -102,7 +102,7 @@ data class Game(
 
             if (this.state == PAWN_CHOSEN_CHOOSE_AREA || this.state == PAWN_IN_BAND_CHOOSE_AREA) {
                 GlobalScope.launch {
-                    delay(200)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.areaOnClick(this@Game.areas[this@Game.possibleMoves.keys.random()]!!.element)
                     }
@@ -129,7 +129,7 @@ data class Game(
         }
         if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER && this.getCurrentPlayer().isAI()) {
             GlobalScope.launch {
-                delay(1000)
+                delay(800)
                 Handler(Looper.getMainLooper()).post {
                     this@Game.diceBoxOnClick()
                 }
@@ -296,9 +296,15 @@ data class Game(
             if (clickedAreaID in this.possibleMoves) {
                 val pawn:Pawn = this.areas[this.sourceAreaID]!!.pop()!!
                 pawn.unHighlight()
+                if (clickedAreaID in arrayOf(-1, 24)) {
+                    pawn.player.addScore(30)
+                } else {
+                    pawn.player.addScore(10)
+                }
                 val leftOverPawn:Pawn? = clickedArea!!.addPawn(pawn)
                 // add leftover pawn to the band
                 if (leftOverPawn != null) {
+                    leftOverPawn.player.addScore(-50)
                     this.addToBand(leftOverPawn)
                 }
                 for (key in this.possibleMoves.keys) {
@@ -325,6 +331,7 @@ data class Game(
                 pawn.unHighlight()
                 var leftOverPawn:Pawn? = clickedArea!!.addPawn(pawn)
                 if (leftOverPawn != null) {
+                    leftOverPawn.player.addScore(-50)
                     this.addToBand(leftOverPawn)
                 }
                 for (key in this.possibleMoves.keys) {

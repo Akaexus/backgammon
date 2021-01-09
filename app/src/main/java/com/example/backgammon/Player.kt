@@ -1,9 +1,13 @@
 package com.example.backgammon
 
 import android.util.Log
+import android.widget.LinearLayout
+import android.widget.TextView
+import org.w3c.dom.Text
 
 data class Player (val user: User?, var color: String, var mode:Int = MODE_PLAYER) {
     var score = 0
+    var scoreBox: LinearLayout? = null
     var direction:Int = 1 // 1 = clockwise, -1 = clockwise
     var dices:ArrayList<Int> = arrayListOf(0, 0)
         set(value) {
@@ -32,8 +36,14 @@ data class Player (val user: User?, var color: String, var mode:Int = MODE_PLAYE
         return movesSet
     }
 
+    fun addScorebox(elem:LinearLayout) {
+        this.scoreBox = elem
+        (this.scoreBox!!.getChildAt(0) as TextView).text = this.getUsername()
+    }
+
     fun addScore(points: Int) {
         this.score += points
+        (this.scoreBox!!.getChildAt(1) as TextView).text = this.score.toString()
     }
 
     fun getUsername(): String {
