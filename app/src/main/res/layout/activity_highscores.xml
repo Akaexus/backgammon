@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/menu_background2"
+    tools:context=".Highscores">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Highscores"
+            android:textSize="30sp"
+            android:shadowColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            />
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#ccffffff"
+            >
+               <ListView
+                   android:id="@+id/lv_highscores"
+                   android:layout_width="700dp"
+                   android:layout_height="280dp">
+
+               </ListView>
+<!--               <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                   android:layout_width="match_parent"-->
+<!--                   android:layout_height="wrap_content"-->
+<!--                   >-->
+<!--                   <TextView-->
+<!--                       android:id="@+id/nick"-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       app:layout_constraintStart_toStartOf="parent"-->
+<!--                       app:layout_constraintTop_toTopOf="parent"-->
+<!--                       app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                       android:paddingRight="20dp"-->
+<!--                       android:text="user1"-->
+<!--                       android:textSize="20sp"-->
+<!--                       />-->
+<!--                   <TextView-->
+<!--                       android:layout_width="wrap_content"-->
+<!--                       android:layout_height="wrap_content"-->
+<!--                       app:layout_constraintStart_toEndOf="@id/nick"-->
+<!--                       app:layout_constraintEnd_toEndOf="parent"-->
+<!--                       app:layout_constraintTop_toTopOf="parent"-->
+<!--                       app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                       android:text="2137 points"-->
+<!--                       android:textSize="20sp"-->
+<!--                       />-->
+<!--               </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

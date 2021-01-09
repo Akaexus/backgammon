@@ -2,4 +2,7 @@
     <string name="app_name">Backgammon</string>
     <string name="you">You</string>
     <string name="backgammon">Backgammon</string>
+    <string name="title_activity_highscores">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

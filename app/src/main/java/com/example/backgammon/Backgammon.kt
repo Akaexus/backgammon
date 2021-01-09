@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.room.Room
 import com.google.android.flexbox.FlexboxLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class Backgammon : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
@@ -82,8 +85,25 @@ class Backgammon : AppCompatActivity() {
         game.init()
     }
 
+    private lateinit var db: AppDatabase
+    lateinit var scoreDao: ScoreDao
+
+    suspend fun setupDatabase() {
+        this.db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "score"
+        ).build()
+        this.scoreDao = db.scoreDao()
+    }
+
     fun onFinish(players:Array<Player>, winner:Int) {
-        Toast.makeText(baseContext, "Player ${players[winner].getUsername()} wins!", Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, "Player ${players[winner].getUsername()} wins with ${players[winner].score} points!", Toast.LENGTH_LONG).show()
+        GlobalScope.launch {
+            this@Backgammon.setupDatabase()
+            if (players[winner].user != null) {
+                this@Backgammon.scoreDao.insert(Score(players[winner].user!!.uid, players[winner].user!!.login, players[winner].score))
+            }
+        }
         finish()
     }
 }

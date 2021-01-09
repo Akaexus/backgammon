@@ -40,5 +40,11 @@ class Menu : AppCompatActivity() {
 //            finish()
         }
 
+        var btn_highscores = requireViewById<Button>(R.id.btn_highscores)
+        btn_highscores.setOnClickListener {
+            val intent = Intent(this, Highscores::class.java)
+            startActivity(intent)
+        }
+
     }
 }

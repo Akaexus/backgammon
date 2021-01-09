@@ -76,7 +76,7 @@ data class Game(
         if (this.getCurrentPlayer().isAI()) {
             if (this.state == PAWN_IN_BAND_CLICK_ON_PAWN) {
                 GlobalScope.launch {
-                    delay(800)
+                    delay(150)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.bandOnClick()
                     }
@@ -84,7 +84,7 @@ data class Game(
             }
             if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER || this.state == ROLL_DICE) {
                 GlobalScope.launch {
-                    delay(800)
+                    delay(150)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.diceBoxOnClick()
                     }
@@ -97,7 +97,7 @@ data class Game(
                 this.areas.forEach { (areaID, area) ->
                     if (this.generatePossibleMoves(diceset, areaID).size > 0) {
                         GlobalScope.launch {
-                            delay(800)
+                            delay(150)
                             Handler(Looper.getMainLooper()).post {
                                 this@Game.areaOnClick(area.element)
                             }
@@ -108,7 +108,7 @@ data class Game(
 
             if (this.state == PAWN_CHOSEN_CHOOSE_AREA || this.state == PAWN_IN_BAND_CHOOSE_AREA) {
                 GlobalScope.launch {
-                    delay(800)
+                    delay(150)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.areaOnClick(this@Game.areas[this@Game.possibleMoves.keys.random()]!!.element)
                     }
@@ -135,7 +135,7 @@ data class Game(
         }
         if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER && this.getCurrentPlayer().isAI()) {
             GlobalScope.launch {
-                delay(800)
+                delay(150)
                 Handler(Looper.getMainLooper()).post {
                     this@Game.diceBoxOnClick()
                 }
