@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     suspend fun setupDatabase() {
         this.db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "users"
+            AppDatabase::class.java, "backgammon"
         ).build()
         this.userDao = db.userDao()
     }

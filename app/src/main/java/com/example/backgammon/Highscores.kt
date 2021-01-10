@@ -50,7 +50,7 @@ class Highscores : AppCompatActivity() {
     private suspend fun setupDatabase() {
         this.db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "score"
+            AppDatabase::class.java, "backgammon"
         ).build()
         this.scoreDao = db.scoreDao()
     }

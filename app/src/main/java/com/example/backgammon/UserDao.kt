@@ -10,7 +10,7 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun getAll(): List<User>
 
-    @Query("SELECT * FROM USER WHERE uid IN (:userIDs)")
+    @Query("SELECT * FROM user WHERE uid IN (:userIDs)")
     fun loadAllByIds(userIDs: IntArray): List<User>
 
     @Query("SELECT * FROM user WHERE login=:login")

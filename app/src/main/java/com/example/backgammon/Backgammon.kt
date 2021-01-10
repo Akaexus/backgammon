@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class Backgammon : AppCompatActivity() {
+    var match:Match? = null
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +28,13 @@ class Backgammon : AppCompatActivity() {
 
         var user1: User? = intent.getParcelableExtra<User>("user1")
         var user2: User? = intent.getParcelableExtra<User>("user2")
-        if (user1 != null) {
-            Log.i("user1", user1.login)
-        }
-        if (user2 != null) {
-            Log.i("user2", user2.login)
-        }
+        this.match = intent.getParcelableExtra<Match>("match")
+        Log.i("match_id", match?.uid.toString())
+
         var mode: String? = intent.getStringExtra("mode")
         var player1 = Player(user1, "blue")
-        var player2 = Player(user2, "red", if (mode != null && mode == "ai") Player.MODE_AI else Player.MODE_PLAYER)
+//        var player2 = Player(user2, "red", if (mode != null && mode == "ai") Player.MODE_AI else Player.MODE_PLAYER)
+        var player2 = Player(user2, "red", Player.MODE_AI)
 
         // get areas
         var areas :HashMap<Int, Area> = hashMapOf()
@@ -92,7 +91,7 @@ class Backgammon : AppCompatActivity() {
     suspend fun setupDatabase() {
         this.db = Room.databaseBuilder(
                 applicationContext,
-                AppDatabase::class.java, "score"
+                AppDatabase::class.java, "backgammon"
         ).build()
         this.scoreDao = db.scoreDao()
     }
@@ -103,6 +102,18 @@ class Backgammon : AppCompatActivity() {
             this@Backgammon.setupDatabase()
             if (players[winner].user != null) {
                 this@Backgammon.scoreDao.insert(Score(players[winner].user!!.uid, players[winner].user!!.login, players[winner].score))
+            }
+            Log.i("match_heh", "match_heh")
+            if (this@Backgammon.match != null) {
+                Log.i("match_heh", "match_heh")
+                this@Backgammon.match!!.winner = winner
+                this@Backgammon.match!!.played = true
+                Log.i("match_updated", "match_updated")
+                var before:Match = this@Backgammon.db.matchDao().findByID(this@Backgammon.match!!.uid)!!
+                Log.i("match_updated", "uid: ${before.uid}, winner: ${before.winner}, played: ${before.played}")
+                this@Backgammon.db.matchDao().updateMatch(this@Backgammon.match!!)
+                var after:Match = this@Backgammon.db.matchDao().findByID(this@Backgammon.match!!.uid)!!
+                Log.i("match_updated", "uid: ${after.uid}, winner: ${after.winner}, played: ${after.played}")
             }
         }
         finish()

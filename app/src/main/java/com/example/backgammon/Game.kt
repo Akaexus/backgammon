@@ -444,6 +444,9 @@ data class Game(
                 Handler(Looper.getMainLooper()).postDelayed(this, 1000)
             }
         })
+        if (this.getCurrentPlayer().isAI()) {
+            this.diceBoxOnClick()
+        }
     }
 
     fun updateTimer() {

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Backgammon"
-        android:textSize="80sp"
+        android:textSize="50sp"
         android:shadowColor="@android:color/darker_gray"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -46,6 +46,16 @@
                 android:textStyle="bold"
                 android:paddingHorizontal="100dp"
                 android:text="PLAY 1 vs AI">
+            </Button>
+            <Button
+                android:id="@+id/btn_tournament"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:fontFamily="casual"
+                android:textStyle="bold"
+                android:paddingHorizontal="100dp"
+                android:text="Tournament">
             </Button>
             <Button
                 android:id="@+id/btn_highscores"

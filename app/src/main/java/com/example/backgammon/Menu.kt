@@ -46,5 +46,11 @@ class Menu : AppCompatActivity() {
             startActivity(intent)
         }
 
+        var btn_tournament = requireViewById<Button>(R.id.btn_tournament)
+        btn_tournament.setOnClickListener {
+            val intent = Intent(this, Tournament::class.java)
+            intent.putExtra("loggedUser", user)
+            startActivity(intent)
+        }
     }
 }

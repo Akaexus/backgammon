@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Backgammon">
         <activity
+            android:name=".Tournament"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".Highscores"
             android:screenOrientation="landscape"
             android:theme="@style/NoActionBarTheme"

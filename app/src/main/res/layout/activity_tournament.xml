@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/menu_background2"
+    android:weightSum="2"
+    tools:context=".Tournament">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tournament"
+            android:textSize="50sp"
+            android:shadowColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+            <Button
+                android:id="@+id/btn_set_players"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:fontFamily="casual"
+                android:textStyle="bold"
+                android:paddingHorizontal="100dp"
+                android:text="Set players"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <TextView
+                android:id="@+id/tv_highscores"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Highscores"
+                android:textSize="20sp"
+                android:shadowColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/btn_set_players"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+            <ListView
+                app:layout_constraintTop_toBottomOf="@id/tv_highscores"
+                app:layout_constraintBottom_toBottomOf="parent"               app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="#aaffffff"
+                android:layout_margin="10dp"
+                android:id="@+id/lv_score"
+                android:padding="10dp"
+                android:layout_height="0dp"
+                android:layout_width="0dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <TextView
+            android:id="@+id/tv_matches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/darker_gray"
+            android:text="Matches"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:background="#aaffffff"
+            android:layout_margin="10dp"
+            android:id="@+id/lv_matches"
+            app:layout_constraintTop_toBottomOf="@+id/tv_matches"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="10dp"
+            android:layout_height="0dp"
+            android:layout_width="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
