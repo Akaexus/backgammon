@@ -33,8 +33,7 @@ class Backgammon : AppCompatActivity() {
 
         var mode: String? = intent.getStringExtra("mode")
         var player1 = Player(user1, "blue")
-//        var player2 = Player(user2, "red", if (mode != null && mode == "ai") Player.MODE_AI else Player.MODE_PLAYER)
-        var player2 = Player(user2, "red", Player.MODE_AI)
+        var player2 = Player(user2, "red", if (mode != null && mode == "ai") Player.MODE_AI else Player.MODE_PLAYER)
 
         // get areas
         var areas :HashMap<Int, Area> = hashMapOf()
