@@ -35,8 +35,8 @@
             >
                <ListView
                    android:id="@+id/lv_highscores"
-                   android:layout_width="700dp"
-                   android:layout_height="280dp">
+                   android:layout_width="350dp"
+                   android:layout_height="250dp">
 
                </ListView>
 <!--               <androidx.constraintlayout.widget.ConstraintLayout-->

@@ -15,6 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/btn_pawnSkin"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/pawn_switch"
+            android:scaleType="fitXY"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/timer"
             android:layout_width="0dp"
@@ -26,7 +36,7 @@
 
             android:fontFamily="casual"
             app:layout_constraintEnd_toStartOf="@id/ll_navbar"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_pawnSkin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

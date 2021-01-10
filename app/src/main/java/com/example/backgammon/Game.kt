@@ -8,10 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.flexbox.FlexboxLayout
@@ -38,17 +35,18 @@ data class Game(
         var scoreBoxes: Array<LinearLayout>,
         var bandElement: FlexboxLayout,
         val finish: KFunction2<Array<Player>, Int, Unit>,
-        var timerElement: TextView
+        var timerElement: TextView,
+        val pawnSwitchElement: ImageButton
 ) {
     // game board
     var house = Array<ArrayList<Pawn>>(2) { _ -> ArrayList<Pawn>() }
-    var state:Int = ROLL_DICE_CHOOSE_FIRST_PLAYER
-    var currentPlayer:Int = 0 // first player begins
-    var possibleMoves:HashMap<Int, ArrayList<Int>> = hashMapOf()
-    var sourceAreaID:Int = 0
-    var band :ArrayList<Pawn> = arrayListOf()
-    var pawnsPerPlayer:Int = 0
-    var timeStarted by Delegates.notNull<Long>()
+    private var state:Int = ROLL_DICE_CHOOSE_FIRST_PLAYER
+    private var currentPlayer:Int = 0 // first player begins
+    private var possibleMoves:HashMap<Int, ArrayList<Int>> = hashMapOf()
+    private var sourceAreaID:Int = 0
+    private var band :ArrayList<Pawn> = arrayListOf()
+    private var pawnsPerPlayer:Int = 0
+    private var timeStarted by Delegates.notNull<Long>()
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -76,7 +74,7 @@ data class Game(
         if (this.getCurrentPlayer().isAI()) {
             if (this.state == PAWN_IN_BAND_CLICK_ON_PAWN) {
                 GlobalScope.launch {
-                    delay(150)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.bandOnClick()
                     }
@@ -84,7 +82,7 @@ data class Game(
             }
             if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER || this.state == ROLL_DICE) {
                 GlobalScope.launch {
-                    delay(150)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.diceBoxOnClick()
                     }
@@ -97,7 +95,7 @@ data class Game(
                 this.areas.forEach { (areaID, area) ->
                     if (this.generatePossibleMoves(diceset, areaID).size > 0) {
                         GlobalScope.launch {
-                            delay(150)
+                            delay(800)
                             Handler(Looper.getMainLooper()).post {
                                 this@Game.areaOnClick(area.element)
                             }
@@ -108,7 +106,7 @@ data class Game(
 
             if (this.state == PAWN_CHOSEN_CHOOSE_AREA || this.state == PAWN_IN_BAND_CHOOSE_AREA) {
                 GlobalScope.launch {
-                    delay(150)
+                    delay(800)
                     Handler(Looper.getMainLooper()).post {
                         this@Game.areaOnClick(this@Game.areas[this@Game.possibleMoves.keys.random()]!!.element)
                     }
@@ -135,7 +133,7 @@ data class Game(
         }
         if (this.state == ROLL_DICE_CHOOSE_FIRST_PLAYER && this.getCurrentPlayer().isAI()) {
             GlobalScope.launch {
-                delay(150)
+                delay(800)
                 Handler(Looper.getMainLooper()).post {
                     this@Game.diceBoxOnClick()
                 }
@@ -401,7 +399,7 @@ data class Game(
                     this.areas[pos[0]]!!.addPawn(pawn)
                     // https://stackoverflow.com/questions/44874843/remove-imageview-programmatically-from-custom-layout
                     // +
-                    // https://stackoverflow.com/questions/15097950/adding-imageview-to-the-layout-programmatically
+                    // https://stackoverflow.com/questions/80097950/adding-imageview-to-the-layout-programmatically
                 }
             }
         }
@@ -428,6 +426,16 @@ data class Game(
                 this.bandOnClick()
             }
         }
+
+        this.pawnSwitchElement.setOnClickListener {
+            this.areas.forEach { (_, area) ->
+                area.pawns.forEach { pawn ->
+                    pawn.switchMode()
+                }
+            }
+        }
+
+        // stopwatch
         this.timeStarted = Calendar.getInstance().timeInMillis
 
         Handler(Looper.getMainLooper()).post(object : Runnable {

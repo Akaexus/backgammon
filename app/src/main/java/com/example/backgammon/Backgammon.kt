@@ -80,7 +80,8 @@ class Backgammon : AppCompatActivity() {
                 scoreBoxes,
                 requireViewById<FlexboxLayout>(R.id.band),
                 ::onFinish,
-                requireViewById<TextView>(R.id.timer)
+                requireViewById<TextView>(R.id.timer),
+                requireViewById<ImageButton>(R.id.btn_pawnSkin)
         )
         game.init()
     }
